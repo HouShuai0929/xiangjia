@@ -11,10 +11,17 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad() {
-
+  onLoad({id}) {
+    // 页面打开拿到id并获数据
+    this.getNotifyDetail(id)
   },
-
+  // 获取数据
+  async getNotifyDetail(id) {
+    if (!id) return
+    const {code,data:notifyList} = await wx.http.get('/announcement/' + id)
+    if (code !== 10000) return wx.utils.toast()
+    this.setData({ notifyList })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
